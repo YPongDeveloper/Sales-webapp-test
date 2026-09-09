@@ -52,13 +52,6 @@ html, body {
   -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid var(--border);
 }
-.topbar-sub {
-  flex: 1; min-width: 0;
-  font-size: 14px; font-weight: 600;
-  color: var(--ink-2);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.topbar.show-back .topbar-sub { color: var(--ink); }
 .back-btn {
   display: none; align-items: center; justify-content: center;
   width: 36px; height: 36px;
@@ -74,8 +67,6 @@ html, body {
   flex: 1; min-width: 0;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
-.topbar-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-.topbar-actions--end { flex: 1; justify-content: flex-end; }
 .search-box {
   display: flex; align-items: center; gap: 8px;
   background: var(--surface-2);
@@ -94,8 +85,17 @@ html, body {
 .search-box input {
   border: none; outline: none; background: transparent;
   font-size: 13px; color: var(--ink);
-  font-family: inherit; width: 180px;
-  min-width: 0;
+  font-family: inherit; flex: 1; min-width: 0;
+}
+.search-box--standalone {
+  margin: 16px 20px 12px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+@media (max-width: 640px) {
+  .search-box--standalone { margin: 12px 14px 10px; }
 }
 
 /* ---------- Main ---------- */
@@ -513,15 +513,11 @@ html, body {
    ============================================================ */
 @media (max-width: 900px) {
   .grid { grid-template-columns: repeat(2, 1fr); }
-  .search-box input { width: 120px; }
   .detail-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 640px) {
-  .topbar { padding: 10px 14px; flex-wrap: wrap; gap: 8px; }
-  .topbar.show-back .search-box { display: none; }
-  .search-box { order: 3; width: 100%; padding: 9px 12px; }
-  .search-box input { width: 100%; }
+  .topbar { padding: 10px 14px; }
   .topbar-title { font-size: 15px; }
   .insert-btn { padding: 7px 12px; font-size: 12.5px; }
 
