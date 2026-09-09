@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>ระบบจัดการพนักงาน</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- =================== TOPBAR =================== -->
+  <header class="topbar">
+    <button class="back-btn" id="backBtn" hidden>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <div class="topbar-actions topbar-actions--end">
+      <div class="search-box" id="searchWrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input type="text" id="searchBox" placeholder="ค้นหา..." />
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- =================== HOME VIEW =================== -->
+    <div id="viewHome">
+      <!-- List -->
+      <section class="card list-card">
+        <div class="card-head">
+          <h2>รายชื่อพนักงาน</h2>
+          <button class="insert-btn" id="gotoInsert">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Insert</span>
+          </button>
+        </div>
+        <div class="table-scroll">
+          <table id="empTable">
+            <thead>
+              <tr>
+                <th>รหัส</th>
+                <th>ชื่อ</th>
+                <th>นามสกุล</th>
+                <th>อายุ</th>
+                <th>อีเมล</th>
+                <th>เบอร์โทร</th>
+                <th class="text-center">จัดการ</th>
+              </tr>
+            </thead>
+            <tbody id="empBody"></tbody>
+          </table>
+        </div>
+        <div class="emp-cards" id="empCards"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <p>ยังไม่มีพนักงาน</p>
+          <span>กด Insert เพื่อเพิ่มคนแรก</span>
+        </div>
+      </section>
+    </div>
+
+    <!-- =================== INSERT VIEW =================== -->
+    <div id="viewInsert" hidden>
+      <section class="card form-card">
+        <div class="card-head">
+          <h2 id="formTitle">เพิ่มพนักงาน</h2>
+          <button class="ghost-btn" id="btnResetForm" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            รีเซ็ต
+          </button>
+        </div>
+        <form id="empForm" autocomplete="off" novalidate>
+          <div class="grid">
+            <div class="field">
+              <label>รหัสพนักงาน</label>
+              <input type="text" id="emp_id" required />
+              <span class="field-error" id="err_id"></span>
+            </div>
+            <div class="field">
+              <label>ชื่อ</label>
+              <input type="text" id="emp_firstName" required />
+              <span class="field-error" id="err_firstName"></span>
+            </div>
+            <div class="field">
+              <label>นามสกุล</label>
+              <input type="text" id="emp_lastName" required />
+              <span class="field-error" id="err_lastName"></span>
+            </div>
+            <div class="field">
+              <label>อายุ</label>
+              <input type="number" id="emp_age" min="0" max="120" inputmode="numeric" />
+              <span class="field-error" id="err_age"></span>
+            </div>
+            <div class="field">
+              <label>อีเมล</label>
+              <input type="email" id="emp_email" />
+            </div>
+            <div class="field">
+              <label>เบอร์โทร</label>
+              <input type="tel" id="emp_phone" pattern="[0-9\-\+\s]*" inputmode="tel" maxlength="15" />
+              <span class="field-error" id="err_phone"></span>
+            </div>
+          </div>
+          <div class="action-row">
+            <button type="button" class="btn btn-add" id="btnAdd">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+              Add
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Staged list (with Submit button on the same row) -->
+      <section class="card" id="stagedCard" hidden>
+        <div class="card-head">
+          <h2>รายการที่จะเพิ่ม <span class="count-badge" id="stagedCount">0</span></h2>
+          <button type="button" class="btn btn-submit" id="btnSubmit" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+            Submit
+          </button>
+        </div>
+        <div class="staged-list" id="stagedList"></div>
+      </section>
+    </div>
+  </main>
+
+  <!-- =================== DETAIL POPUP =================== -->
+  <div class="modal-backdrop" id="detailModal" hidden>
+    <div class="modal" data-size="md">
+      <div class="modal-head">
+        <div class="modal-title" id="detailTitle">รายละเอียดพนักงาน</div>
+        <button class="icon-btn" data-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="detailBody"></div>
+      <div class="modal-foot" id="detailFoot">
+        <button class="icon-btn-lg" id="detailEdit" title="แก้ไข">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </button>
+        <button class="icon-btn-lg danger" id="detailDelete" title="ลบ">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== CONFIRM POPUP =================== -->
+  <div class="modal-backdrop" id="confirmModal" hidden>
+    <div class="modal" data-size="sm">
+      <div class="modal-head">
+        <div class="modal-title" id="confirmTitle">ยืนยัน</div>
+        <button class="icon-btn" data-close>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="confirmBody"></div>
+      <div class="modal-foot" id="confirmFoot"></div>
+    </div>
+  </div>
+
+  <!-- =================== TOAST =================== -->
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

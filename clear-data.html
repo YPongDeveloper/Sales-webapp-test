@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Clear Data</title>
+<style>
+  body {
+    font-family: -apple-system, system-ui, sans-serif;
+    background: #f7f8fa;
+    color: #0b0d12;
+    display: grid; place-items: center;
+    min-height: 100vh; margin: 0; padding: 20px;
+  }
+  .box {
+    background: white; border-radius: 16px;
+    padding: 32px; max-width: 420px; width: 100%;
+    box-shadow: 0 4px 16px rgba(0,0,0,.06);
+    text-align: center;
+  }
+  h1 { margin: 0 0 8px; font-size: 22px; }
+  p { color: #4a5160; margin: 0 0 24px; font-size: 14px; }
+  button {
+    background: #ef4444; color: white; border: none;
+    padding: 12px 24px; border-radius: 10px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    transition: filter .15s;
+  }
+  button:hover { filter: brightness(1.08); }
+  .ok { color: #10b981; font-weight: 600; margin-top: 16px; display: none; }
+  .ok.show { display: block; }
+</style>
+</head>
+<body>
+  <div class="box">
+    <h1>🧹 ล้างข้อมูล</h1>
+    <p>กดปุ่มด้านล่างเพื่อลบ localStorage ทั้งหมดของ Sales OS</p>
+    <button onclick="clearAll()">ล้างข้อมูลทั้งหมด</button>
+    <p class="ok" id="ok">✅ ล้างข้อมูลเรียบร้อย ปิดหน้านี้ได้เลย</p>
+  </div>
+  <script>
+    function clearAll() {
+      try {
+        localStorage.removeItem('sales_os_employees_v1');
+        localStorage.removeItem('sales_os_employees_v1_ver');
+        localStorage.removeItem('sales_os_employees_v2');
+        localStorage.removeItem('sales_os_employees_v2_ver');
+        localStorage.removeItem('sales_os_employees_v3');
+        localStorage.removeItem('sales_os_employees_v3_ver');
+        // Also clear all sales_os_ keys just in case
+        Object.keys(localStorage).forEach(k => {
+          if (k.startsWith('sales_os_')) localStorage.removeItem(k);
+        });
+        document.getElementById('ok').classList.add('show');
+      } catch (e) {
+        alert('Error: ' + e.message);
+      }
+    }
+  </script>
+</body>
+</html>
