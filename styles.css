@@ -167,9 +167,9 @@ html, body {
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas:
     "id      .       ."
-    "fname   lname   ."
+    "fname   lname   lname"
     "age     .       ."
-    "email   phone   .";
+    "email   phone   phone";
   gap: 16px 14px;
 }
 .field--id    { grid-area: id; }
