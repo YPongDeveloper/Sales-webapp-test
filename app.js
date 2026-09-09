@@ -105,7 +105,6 @@ function setView(view) {
   const topbar = document.querySelector('.topbar');
   topbar.classList.toggle('show-back', view === 'insert');
   $('searchWrap').style.display = view === 'home' ? '' : 'none';
-  $('topSub').textContent = view === 'insert' ? 'Insert Employee' : 'Employee Manager';
   if (view === 'insert') {
     resetInsertForm();
     renderStaged();
