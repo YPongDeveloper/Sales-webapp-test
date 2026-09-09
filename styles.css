@@ -160,6 +160,7 @@ html, body {
 .ghost-btn:hover { background: var(--surface-2); border-color: var(--border-strong); color: var(--ink); }
 
 /* ---------- Form ---------- */
+.form-card { max-width: 640px; width: 100%; margin-left: auto; margin-right: auto; }
 .form-card form { padding: 24px; }
 .grid {
   display: grid;
