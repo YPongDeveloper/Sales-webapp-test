@@ -67,66 +67,75 @@
 
     <!-- =================== INSERT VIEW =================== -->
     <div id="viewInsert" hidden>
-      <section class="card form-card">
-        <div class="card-head">
-          <h2 id="formTitle">เพิ่มพนักงาน</h2>
-          <button class="ghost-btn" id="btnResetForm" type="button">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-            รีเซ็ต
-          </button>
-        </div>
-        <form id="empForm" autocomplete="off" novalidate>
-          <div class="grid">
-            <div class="field field--id">
-              <label>รหัสพนักงาน</label>
-              <input type="text" id="emp_id" required />
-              <span class="field-error" id="err_id"></span>
-            </div>
-            <div class="field field--fname">
-              <label>ชื่อ</label>
-              <input type="text" id="emp_firstName" required />
-              <span class="field-error" id="err_firstName"></span>
-            </div>
-            <div class="field field--lname">
-              <label>นามสกุล</label>
-              <input type="text" id="emp_lastName" required />
-              <span class="field-error" id="err_lastName"></span>
-            </div>
-            <div class="field field--age">
-              <label>อายุ</label>
-              <input type="number" id="emp_age" min="0" max="120" inputmode="numeric" />
-              <span class="field-error" id="err_age"></span>
-            </div>
-            <div class="field field--email">
-              <label>อีเมล</label>
-              <input type="email" id="emp_email" />
-            </div>
-            <div class="field field--phone">
-              <label>เบอร์โทร</label>
-              <input type="tel" id="emp_phone" pattern="[0-9\-\+\s]*" inputmode="tel" maxlength="15" />
-              <span class="field-error" id="err_phone"></span>
-            </div>
-          </div>
-          <div class="action-row">
-            <button type="button" class="btn btn-add" id="btnAdd">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-              Add
+      <div class="insert-layout">
+
+        <!-- Form (left) -->
+        <section class="card form-card">
+          <div class="card-head">
+            <h2 id="formTitle">เพิ่มพนักงาน</h2>
+            <button class="ghost-btn" id="btnResetForm" type="button">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+              รีเซ็ต
             </button>
           </div>
-        </form>
-      </section>
+          <form id="empForm" autocomplete="off" novalidate>
+            <div class="grid">
+              <div class="field field--id">
+                <label>รหัสพนักงาน</label>
+                <input type="text" id="emp_id" required />
+                <span class="field-error" id="err_id"></span>
+              </div>
+              <div class="field field--fname">
+                <label>ชื่อ</label>
+                <input type="text" id="emp_firstName" required />
+                <span class="field-error" id="err_firstName"></span>
+              </div>
+              <div class="field field--lname">
+                <label>นามสกุล</label>
+                <input type="text" id="emp_lastName" required />
+                <span class="field-error" id="err_lastName"></span>
+              </div>
+              <div class="field field--age">
+                <label>อายุ</label>
+                <input type="number" id="emp_age" min="0" max="120" inputmode="numeric" />
+                <span class="field-error" id="err_age"></span>
+              </div>
+              <div class="field field--email">
+                <label>อีเมล</label>
+                <input type="email" id="emp_email" />
+              </div>
+              <div class="field field--phone">
+                <label>เบอร์โทร</label>
+                <input type="tel" id="emp_phone" pattern="[0-9\-\+\s]*" inputmode="tel" maxlength="15" />
+                <span class="field-error" id="err_phone"></span>
+              </div>
+            </div>
+            <div class="action-row">
+              <button type="button" class="btn btn-add" id="btnAdd">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+                Add
+              </button>
+            </div>
+          </form>
+        </section>
 
-      <!-- Staged list (with Submit button on the same row) -->
-      <section class="card" id="stagedCard" hidden>
-        <div class="card-head">
-          <h2>รายการที่จะเพิ่ม <span class="count-badge" id="stagedCount">0</span></h2>
-          <button type="button" class="btn btn-submit" id="btnSubmit" disabled>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            Submit
-          </button>
-        </div>
-        <div class="staged-list" id="stagedList"></div>
-      </section>
+        <!-- Staged list (right) -->
+        <section class="card staged-card">
+          <div class="card-head">
+            <h2>รายการที่จะเพิ่ม <span class="count-badge" id="stagedCount">0</span></h2>
+          </div>
+          <div class="staged-body" id="stagedBody">
+            <!-- placeholder / table injected by JS -->
+          </div>
+          <div class="staged-foot">
+            <button type="button" class="btn btn-submit" id="btnSubmit" disabled>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+              Submit
+            </button>
+          </div>
+        </section>
+
+      </div>
     </div>
   </main>
 

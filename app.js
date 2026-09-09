@@ -251,32 +251,53 @@ function validateAll(data) {
 }
 
 function renderStaged() {
-  const card = $('stagedCard');
+  $('stagedCount').textContent = state.staged.length;
+  $('btnSubmit').disabled = state.staged.length === 0;
+
   if (!state.staged.length) {
-    card.hidden = true;
-    $('btnSubmit').disabled = true;
+    $('stagedBody').innerHTML = `
+      <div class="staged-empty">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p>ยังไม่มีรายการ</p>
+        <span>กรุณาเพิ่มพนักงาน</span>
+      </div>
+    `;
     return;
   }
-  card.hidden = false;
-  $('btnSubmit').disabled = false;
-  $('stagedCount').textContent = state.staged.length;
-  $('stagedList').innerHTML = state.staged.map((s, i) => `
-    <div class="staged-item">
-      <div class="staged-num">${i + 1}</div>
-      <div class="staged-info">
-        <div class="id">${esc(s.id)}</div>
-        <div class="name">${esc(s.firstName)} ${esc(s.lastName)}</div>
-      </div>
-      <div class="staged-actions">
-        <button class="icon-btn" data-staged-edit="${i}" title="แก้ไข">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </button>
-        <button class="icon-btn" data-staged-del="${i}" title="ลบ" style="color:var(--danger);border-color:#fecaca">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg>
-        </button>
-      </div>
-    </div>
-  `).join('');
+
+  $('stagedBody').innerHTML = `
+    <table class="staged-table">
+      <thead>
+        <tr>
+          <th style="width:36px">#</th>
+          <th>รหัส</th>
+          <th>ชื่อ</th>
+          <th>นามสกุล</th>
+          <th style="width:80px" class="text-center">จัดการ</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${state.staged.map((s, i) => `
+          <tr>
+            <td class="staged-num">${i + 1}</td>
+            <td><span class="emp-id">${esc(s.id)}</span></td>
+            <td>${esc(s.firstName)}</td>
+            <td>${esc(s.lastName)}</td>
+            <td class="text-center">
+              <div class="row-actions">
+                <button class="icon-btn" data-staged-edit="${i}" title="แก้ไข">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                </button>
+                <button class="icon-btn" data-staged-del="${i}" title="ลบ" style="color:var(--danger);border-color:#fecaca">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
 }
 
 function loadStagedIntoForm(i) {
@@ -595,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
   $('btnAdd').onclick = onAdd;
   $('btnSubmit').onclick = onSubmit;
   $('btnResetForm').onclick = resetInsertForm;
-  $('stagedList').addEventListener('click', onStagedClick);
+  $('stagedBody').addEventListener('click', onStagedClick);
 
   $('emp_id').addEventListener('input', (e) => {
     const v = e.target.value.trim();
