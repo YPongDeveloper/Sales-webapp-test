@@ -52,10 +52,7 @@ html, body {
   transition: background var(--t), border-color var(--t);
 }
 .topbar.show-back {
-  background: rgba(255, 255, 255, .85);
-  backdrop-filter: saturate(180%) blur(14px);
-  -webkit-backdrop-filter: saturate(180%) blur(14px);
-  border-bottom-color: var(--border);
+  border-bottom-color: transparent;
 }
 .back-btn {
   display: none; align-items: center; justify-content: center;
@@ -166,9 +163,20 @@ html, body {
 .form-card form { padding: 24px; }
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas:
+    "id    .     ."
+    "fname lname ."
+    "age   .     ."
+    "email phone .";
   gap: 16px 14px;
 }
+.field--id    { grid-area: id; }
+.field--fname { grid-area: fname; }
+.field--lname { grid-area: lname; }
+.field--age   { grid-area: age; }
+.field--email { grid-area: email; }
+.field--phone { grid-area: phone; }
 .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
 .field label {
   font-size: 11.5px; font-weight: 600; color: var(--ink-2);
@@ -218,6 +226,7 @@ html, body {
 .action-row {
   display: flex; gap: 10px; margin-top: 22px;
   flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .btn {
@@ -528,7 +537,13 @@ html, body {
 
   .main { padding: 14px 14px 100px; gap: 14px; }
 
-  .grid { grid-template-columns: 1fr; gap: 14px; }
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "id" "fname" "lname" "age" "email" "phone";
+    gap: 14px;
+  }
+  .field--id, .field--fname, .field--lname,
+  .field--age, .field--email, .field--phone { grid-area: auto; }
   .field input, .field select { padding: 11px 14px; font-size: 15px; }
 
   .action-row { gap: 8px; }
