@@ -343,10 +343,10 @@ async function onSubmit() {
 /* ============================================================
    DETAIL POPUP
    ============================================================ */
-function openDetail(id) {
+function openDetail(id, editMode = false) {
   const emp = state.cache.find(x => x.id === id);
   if (!emp) return;
-  state.editMode = false;
+  state.editMode = editMode;
   state.editingId = id;
   renderDetailView(emp);
   $('detailModal').hidden = false;
@@ -548,7 +548,7 @@ function onHomeClick(e) {
   const editBtn   = e.target.closest('[data-edit]');
   const delBtn    = e.target.closest('[data-del]');
   const detailEl  = e.target.closest('[data-detail]');
-  if (editBtn) { e.stopPropagation(); openDetail(editBtn.getAttribute('data-edit')); return; }
+  if (editBtn) { e.stopPropagation(); openDetail(editBtn.getAttribute('data-edit'), true); return; }
   if (delBtn)  { e.stopPropagation(); const emp = state.cache.find(x => x.id === delBtn.getAttribute('data-del')); if (emp) confirmDelete(emp); return; }
   if (detailEl) { openDetail(detailEl.getAttribute('data-detail')); return; }
 }
