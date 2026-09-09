@@ -251,7 +251,6 @@ function validateAll(data) {
 }
 
 function renderStaged() {
-  $('stagedCount').textContent = state.staged.length;
   $('btnSubmit').disabled = state.staged.length === 0;
 
   if (!state.staged.length) {
@@ -269,7 +268,6 @@ function renderStaged() {
     <table class="staged-table">
       <thead>
         <tr>
-          <th style="width:36px">#</th>
           <th>รหัส</th>
           <th>ชื่อ</th>
           <th>นามสกุล</th>
@@ -279,7 +277,6 @@ function renderStaged() {
       <tbody>
         ${state.staged.map((s, i) => `
           <tr>
-            <td class="staged-num">${i + 1}</td>
             <td><span class="emp-id">${esc(s.id)}</span></td>
             <td>${esc(s.firstName)}</td>
             <td>${esc(s.lastName)}</td>
