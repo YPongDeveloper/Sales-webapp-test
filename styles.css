@@ -87,15 +87,14 @@ html, body {
   font-size: 13px; color: var(--ink);
   font-family: inherit; flex: 1; min-width: 0;
 }
-.search-box--standalone {
-  margin: 16px 20px 12px;
-  padding: 10px 14px;
-  background: var(--surface);
+.search-box--inline {
+  flex: 1; max-width: 280px;
+  padding: 7px 12px;
+  background: var(--surface-2);
   border-color: var(--border);
-  box-shadow: var(--shadow-sm);
 }
 @media (max-width: 640px) {
-  .search-box--standalone { margin: 12px 14px 10px; }
+  .search-box--inline { order: 3; max-width: 100%; flex-basis: 100%; }
 }
 
 /* ---------- Main ---------- */
